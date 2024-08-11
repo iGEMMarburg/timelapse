@@ -5,6 +5,12 @@
 This project is designed to capture a timelapse using a Raspberry Pi 4 Model B and the Camera Module 3.The system runs
 on Raspberry Pi OS Lite (64-bit) and leverages the terminal multiplexer zellij for efficient terminal management.
 
+## Network Access
+
+The Raspberry Pi hosts its own WLAN network, allowing you to connect and SSH into the device from anywhere, even without
+an external internet connection. This ensures that you can manage and monitor the timelapse setup remotely, no matter
+where you are.
+
 ## Setup and Configuration
 
 ### Finding Optimal Camera Parameters
