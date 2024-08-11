@@ -47,7 +47,7 @@ def take_picture(picam2, first_capture_time):
 
     now = datetime.now()
     minutes = int((now - first_capture_time).total_seconds() / 60.0)
-    filename = now.strftime(f"/home/igem/Pictures/{minutes:04d}_%M-%H_%d-%m-%Y.jpg")
+    filename = now.strftime(f"/home/igem/Pictures/{minutes:04d}_%Y-%m-%d_%H-%M.jpg")
     picam2.capture_file(filename)
     print(f"Picture taken and saved as {filename}")
 
