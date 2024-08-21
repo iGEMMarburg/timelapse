@@ -6,9 +6,14 @@ from picamera2 import Picamera2
 
 # Global variables for the interval, distance, exposure, ISO, and no-capture time range
 INTERVAL_MINUTES = 15
+
 DISTANCE_METERS = 0.5
+PICTURE_COUNT = 9
+PICTURE_STEP_METERS = 0.02
+
 EXPOSURE_MICROSECONDS = 50000
 ISO_VALUE = 200
+
 NO_CAPTURE_START_HOUR = "21:00"
 NO_CAPTURE_END_HOUR = "05:00"
 
@@ -47,9 +52,13 @@ def take_picture(picam2, first_capture_time):
 
     now = datetime.now()
     minutes = int((now - first_capture_time).total_seconds() / 60.0)
-    filename = now.strftime(f"/home/igem/Pictures/{minutes:04d}_%Y-%m-%d_%H-%M.jpg")
-    picam2.capture_file(filename)
-    print(f"Picture taken and saved as {filename}")
+    base_filename = now.strftime(f"/home/igem/Pictures/{minutes:04d}_%Y-%m-%d_%H-%M")
+
+    for i in range(PICTURE_COUNT):
+        filename = f"{base_filename}_{i:02d}.jpg"
+        update_lens_position(picam2, DISTANCES[i])
+        picam2.capture_file(filename)
+    print(f"{PICTURE_COUNT} pictures taken and saved as {base_filename}")
 
 
 def get_next_capture_time(interval):
@@ -71,8 +80,13 @@ capture_config = picam2.create_still_configuration()
 picam2.configure(capture_config)
 picam2.start()
 
+# Set additional global variables
+CENTER_DISTANCE = DISTANCE_METERS if PICTURE_COUNT % 2 == 1 else DISTANCE_METERS + 0.5 * PICTURE_STEP_METERS
+DISTANCES = [CENTER_DISTANCE + PICTURE_STEP_METERS * i
+             for i in range(-(PICTURE_COUNT // 2), PICTURE_COUNT - (PICTURE_COUNT // 2))]
+
 # Update the camera settings based on the global variables
-update_lens_position(picam2, DISTANCE_METERS)
+update_lens_position(picam2, CENTER_DISTANCE)
 update_exposure_time(picam2, EXPOSURE_MICROSECONDS)
 update_iso(picam2, ISO_VALUE)
 

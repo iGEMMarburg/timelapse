@@ -1,4 +1,4 @@
-# iGEM Timelapse with Raspberry Pi 4 Model B and Camera Module 3
+# Create a Timelapse with a Raspberry Pi 4 Model B and a Camera Module 3
 
 ## Overview
 
@@ -25,6 +25,8 @@ Once you've identified the ideal camera settings using `find_parameters.py`, you
 the `create_timelapse.py` script by updating the respective global variables.
 Additionally, the script includes global variables to control the time between each photo and the hours during which no
 pictures should be taken.
+To enable techniques such as focus stacking, the script also allows multiple images to be taken at a given time with
+different focus distances.
 
 ## Running the Timelapse
 
