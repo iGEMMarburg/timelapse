@@ -1,6 +1,10 @@
 from libcamera import controls
 from picamera2 import Picamera2, Preview
 
+DEFAULT_DISTANCE_METERS = 0.5
+DEFAULT_EXPOSURE_MICROSECONDS = 50000
+DEFAULT_ISO_VALUE = 200
+
 # Initialize the camera
 picam2 = Picamera2()
 preview_config = picam2.create_preview_configuration()
@@ -45,6 +49,10 @@ def take_picture(filename="capture.png"):
     picam2.switch_mode_and_capture_file(capture_config, filename)
     print(f"Picture taken and saved as {filename}")
 
+
+update_lens_position(DEFAULT_DISTANCE_METERS)
+update_exposure_time(DEFAULT_EXPOSURE_MICROSECONDS)
+update_iso(DEFAULT_ISO_VALUE)
 
 # Main loop to get user input
 try:
